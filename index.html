@@ -1,6 +1,412 @@
-<html>
-  <body>
-    <h1>Kaushal Coder</h1>
-    <p>Coming soon.</p>
-  </body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KC — Kaushal Coder</title>
+  <style>
+    :root {
+      --bg:           #F8F7F4;
+      --bg-subtle:    #EEECEA;
+      --text:         #1A1A18;
+      --text-2:       #6B6A66;
+      --accent:       #5145B5;
+      --accent-light: #EAE8FC;
+      --border:       #DDDBD4;
+      --font-display: Georgia, 'Times New Roman', serif;
+      --font-body:    -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+      --font-mono:    'SF Mono', 'Fira Code', 'Courier New', monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    /* ── Nav ─────────────────────────────────────── */
+    nav {
+      padding: 18px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: var(--bg);
+      z-index: 10;
+    }
+    .nav-logo {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text);
+      text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 28px; list-style: none; }
+    .nav-links a {
+      font-size: 13px;
+      color: var(--text-2);
+      text-decoration: none;
+    }
+    .nav-links a:hover { color: var(--accent); }
+
+    /* ── Layout ──────────────────────────────────── */
+    .container { max-width: 760px; margin: 0 auto; padding: 0 24px; }
+
+    /* ── Hero ────────────────────────────────────── */
+    .hero {
+      padding: 80px 0 72px;
+      border-bottom: 1px solid var(--border);
+    }
+    .hero-eyebrow {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 20px;
+    }
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(30px, 5vw, 46px);
+      font-weight: normal;
+      line-height: 1.2;
+      letter-spacing: -0.01em;
+      color: var(--text);
+      margin-bottom: 24px;
+      max-width: 580px;
+    }
+    .hero-body {
+      font-size: 17px;
+      line-height: 1.75;
+      color: var(--text-2);
+      max-width: 540px;
+      margin-bottom: 36px;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--accent);
+      color: #fff;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      padding: 11px 22px;
+      border-radius: 6px;
+      transition: background 0.15s;
+    }
+    .btn:hover { background: #3C3489; }
+
+    /* ── Sections ────────────────────────────────── */
+    .section {
+      padding: 64px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .section:last-of-type { border-bottom: none; }
+
+    .section-title {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--text);
+      padding-left: 14px;
+      border-left: 3px solid var(--accent);
+      margin-bottom: 40px;
+      line-height: 1.3;
+    }
+
+    /* ── Demos ───────────────────────────────────── */
+    .demos-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+    .demo-item { display: flex; flex-direction: column; gap: 10px; }
+    .demo-placeholder {
+      background: var(--bg-subtle);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      aspect-ratio: 16 / 9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .demo-play {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      border: 1.5px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-2);
+    }
+    .demo-play svg { margin-left: 3px; }
+    .demo-label {
+      font-size: 12px;
+      color: var(--text-2);
+      line-height: 1.4;
+    }
+
+    /* ── Architecture ────────────────────────────── */
+    .diagram-block { margin-bottom: 44px; }
+    .diagram-block:last-child { margin-bottom: 0; }
+    .diagram-block img {
+      width: 100%;
+      height: auto;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      display: block;
+    }
+    .diagram-caption {
+      font-size: 13px;
+      color: var(--text-2);
+      margin-top: 12px;
+      padding-left: 12px;
+      border-left: 2px solid var(--border);
+      line-height: 1.6;
+    }
+
+    /* ── Steps ───────────────────────────────────── */
+    .steps { display: flex; flex-direction: column; gap: 28px; }
+    .step { display: grid; grid-template-columns: 30px 1fr; gap: 16px; align-items: start; }
+    .step-number {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--accent);
+      background: var(--accent-light);
+      width: 28px;
+      height: 28px;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .step-content h3 {
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 5px;
+      color: var(--text);
+    }
+    .step-content p {
+      font-size: 14px;
+      color: var(--text-2);
+      line-height: 1.65;
+    }
+    .step-content a { color: var(--accent); text-decoration: none; }
+    .step-content a:hover { text-decoration: underline; }
+
+    code {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      background: var(--bg-subtle);
+      padding: 2px 5px;
+      border-radius: 3px;
+      border: 1px solid var(--border);
+      color: var(--text);
+    }
+
+    /* ── Footer ──────────────────────────────────── */
+    footer {
+      padding: 28px 0;
+      font-size: 12px;
+      color: var(--text-2);
+      border-top: 1px solid var(--border);
+    }
+    footer a { color: inherit; }
+
+    /* ── Responsive ──────────────────────────────── */
+    @media (max-width: 600px) {
+      .nav-links { display: none; }
+      .hero { padding: 48px 0; }
+      .section { padding: 48px 0; }
+      .demos-grid { grid-template-columns: 1fr; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="nav-logo">KC</a>
+  <ul class="nav-links">
+    <li><a href="#demos">Demos</a></li>
+    <li><a href="#architecture">Architecture</a></li>
+    <li><a href="#try">Try it</a></li>
+  </ul>
+</nav>
+
+<main>
+
+  <!-- ── Hero ─────────────────────────────────────────── -->
+  <section class="hero">
+    <div class="container">
+      <p class="hero-eyebrow">Kaushal Coder</p>
+      <h1 class="hero-title">A thinking environment for software development.</h1>
+      <p class="hero-body">
+        KC is a VS Code extension that structures how a developer thinks through a problem.
+        Conversation is the thinking — the graph captures it. Phases guide the work from
+        exploration through implementation, with an LLM that reasons alongside the developer
+        rather than acting for them.
+      </p>
+      <a href="https://kc.kaushalcoder.com" class="btn" target="_blank" rel="noopener">
+        Try KC &rarr;
+      </a>
+    </div>
+  </section>
+
+  <!-- ── Demos ─────────────────────────────────────────── -->
+  <section class="section" id="demos">
+    <div class="container">
+      <h2 class="section-title">Demos</h2>
+      <div class="demos-grid">
+
+        <div class="demo-item">
+          <div class="demo-placeholder">
+            <div class="demo-play">
+              <svg width="11" height="13" viewBox="0 0 11 13" fill="currentColor">
+                <path d="M1 1l9 5.5-9 5.5V1z"/>
+              </svg>
+            </div>
+          </div>
+          <span class="demo-label">Demo 1 — coming soon</span>
+        </div>
+
+        <div class="demo-item">
+          <div class="demo-placeholder">
+            <div class="demo-play">
+              <svg width="11" height="13" viewBox="0 0 11 13" fill="currentColor">
+                <path d="M1 1l9 5.5-9 5.5V1z"/>
+              </svg>
+            </div>
+          </div>
+          <span class="demo-label">Demo 2 — coming soon</span>
+        </div>
+
+        <div class="demo-item">
+          <div class="demo-placeholder">
+            <div class="demo-play">
+              <svg width="11" height="13" viewBox="0 0 11 13" fill="currentColor">
+                <path d="M1 1l9 5.5-9 5.5V1z"/>
+              </svg>
+            </div>
+          </div>
+          <span class="demo-label">Demo 3 — coming soon</span>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Architecture ──────────────────────────────────── -->
+  <section class="section" id="architecture">
+    <div class="container">
+      <h2 class="section-title">Architecture</h2>
+
+      <div class="diagram-block">
+        <img src="assets/kc_infra_view_management_zones.svg"
+             alt="KC infrastructure — management zones"
+             width="680" height="390">
+        <p class="diagram-caption">
+          KC runs on a GCE VM provisioned by Terraform. System services are installed once
+          at VM creation via <code>startup.sh</code>. The KC stack — kc-backend, Memgraph,
+          OPA — is deployed as Docker containers via <code>setup.sh</code>. Secrets and
+          compiled artifacts are the only parts provided manually by the developer.
+        </p>
+      </div>
+
+      <div class="diagram-block">
+        <img src="assets/kc_runtime_request_lifecycle.svg"
+             alt="KC runtime — request lifecycle"
+             width="680" height="420">
+        <p class="diagram-caption">
+          A message flows from the guest's browser through Cloudflare Access authentication,
+          into code-server via the tunnel, then over WebSocket RPC to kc-backend. kc-backend
+          calls the Anthropic API and writes structured findings to Memgraph. The response
+          renders in the KC webview.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── How to try it ─────────────────────────────────── -->
+  <section class="section" id="try">
+    <div class="container">
+      <h2 class="section-title">How to try it</h2>
+      <div class="steps">
+
+        <div class="step">
+          <div class="step-number">1</div>
+          <div class="step-content">
+            <h3>Open the KC environment</h3>
+            <p>
+              Go to <a href="https://kc.kaushalcoder.com" target="_blank" rel="noopener">kc.kaushalcoder.com</a>.
+              You will be prompted to authenticate via Cloudflare Access — use the email
+              address you were given access on.
+            </p>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-number">2</div>
+          <div class="step-content">
+            <h3>You are in code-server</h3>
+            <p>
+              The environment opens as a browser-based VS Code instance. KC is
+              pre-installed as an extension and a sample project is loaded in the workspace.
+            </p>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-number">3</div>
+          <div class="step-content">
+            <h3>Open the KC panel</h3>
+            <p>
+              <!-- TODO: add the exact step to open KC in the sidebar -->
+              Look for the KC icon in the VS Code activity bar. Open it to see the ticket
+              and phase panels.
+            </p>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-number">4</div>
+          <div class="step-content">
+            <h3>Start a conversation</h3>
+            <p>
+              <!-- TODO: add specific guidance for what judges should explore -->
+              Type a message in the KC chat panel. The agent will begin reasoning through
+              the problem — asking questions, capturing structured findings to the knowledge
+              graph, and surfacing what it sees at each phase.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="container">
+    <p>KC &mdash; Kaushal Coder &middot; <a href="https://kc.kaushalcoder.com">kc.kaushalcoder.com</a></p>
+  </div>
+</footer>
+
+</body>
 </html>
